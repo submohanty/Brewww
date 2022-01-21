@@ -1,0 +1,59 @@
+<!--
+  TODO: Update the EJS code to insert the following information:
+    - display_title
+    - url
+    - suggested_link_text
+    - publication_date
+    - summary_short
+
+  HINT: Not sure how to display the reviews, check out Bootstrap cards here: https://getbootstrap.com/docs/4.0/components/card/
+-->
+<% if (items) { %>
+  <div class="card-columns">
+	<% items.forEach(function(items){ %>
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title"><%= items.name %></h5>
+          <p><%= items.brewery_type %></p>
+          <p><%= items.street %></p> 
+          <button type="button" class="btn btn-primary text-white bg-info mb-3" data-toggle="modal" data-target="#exampleModal"> Add Review
+          </button>
+          <!--Modal Stuff -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add Review</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <!--Input stuff inside the modal here-->
+                  <form>
+                    <div class="form-group">
+                      <label for="brewery-name" class="col-form-label">Brewery Name:</label>
+                      <input type="text" class="form-control" id="brewery-name" value="<%= items.name %>" readonly> 
+                      <input type="text" class="form-control" id="brewery-name">
+                    </div>
+                    <div class="form-group">
+                      <label for="review-text" class="col-form-label">Enter your review here:</label>
+                      <input type="text" class="form-control" id="review-text">
+                    </div>
+                  </form>
+                  <!---->
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!---->
+        </div>
+      </div>
+	<%});%>
+  </div>
+<% } %>

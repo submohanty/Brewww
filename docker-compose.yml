@@ -1,0 +1,35 @@
+# ------------------------------------------------------------------------------
+# More resources related to this file:
+# [1] Overview   | https://docs.docker.com/compose/
+# [2] PostgreSQL | https://github.com/docker-library/docs/tree/master/postgres
+# [3] Node.js    | https://github.com/nodejs/docker-node/blob/master/README.md#how-to-use-this-image
+# -------------
+#  More resources for your projects:
+# [4] Samples    | https://github.com/docker/awesome-compose
+# [5] Env Vars   | https://docs.docker.com/compose/environment-variables/
+# [6] Secrets    | https://docs.docker.com/engine/swarm/secrets/#use-secrets-in-compose
+# ------------------------------------------------------------------------------
+
+# This section defines all of our components, each which is itself a docker image [1].
+services:
+  heroku-cli:
+    build: ./heroku
+    env_file: ./heroku/.env
+  # ------------------------------------------- # This section defines our Node.js image [3].
+  web:
+    image: node:12
+    user: "node"                                # Use a non-root user node
+    working_dir: /home/node/app                 # with home directory /home/node/app
+    # environment:
+    #   - NODE_ENV=production                   # << Use this when deploying your application,
+    #                                           #   currently we have it off so that changes to
+    #                                           #   *.ejs are visible without restarting docker-compose.
+    ports:
+        - "3000:3000"                           # Here we do need to publish the port for viewing on the host.
+    volumes:
+      - ./:/home/node/app                       # Binds the current directory (containing our source code) into the image,
+                                                #  so that changes made to the source code on the host
+                                                #  are reflected witin the container.
+    command: "npm run dev"                      # This will run nodemon so    
+                                                # that changes to server.js will 
+                                                # update in real time.
